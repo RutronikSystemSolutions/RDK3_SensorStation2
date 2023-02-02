@@ -60,6 +60,7 @@
 #include "semphr.h"
 #include "thermal_imaging_task.h"
 #include "gesture_control_task.h"
+#include "dio59020.h"
 
 /*Priority for button interrupts*/
 #define BTN_IRQ_PRIORITY		5
@@ -143,6 +144,13 @@ int main(void)
     if (result != CY_RSLT_SUCCESS)
     {
     	CY_ASSERT(0);
+    }
+
+    /* DIO59020 Charger Setup*/
+    if(dio_online())
+    {
+    	/*Disable the charger*/
+		dio_charger_disable();
     }
 
     /* Create a mutex for the I2C. */
