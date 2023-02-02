@@ -12,6 +12,7 @@
 #include "arm_math.h"
 #include "gesture_control_task.h"
 #include "image_lut.h"
+#include "capsense_task.h"
 
 /*Thermal image*/
 uint8_t thermal_image[THERMAL_SENSORS] = {0};
@@ -44,6 +45,7 @@ void DrawStaticDisplay(void);
 void DrawThermalImage(void);
 void DrawTemperatures(void);
 void DrawChevrons(void);
+void DrawButtons(void);
 
 void thermal_imaging_task(void *param)
 {
@@ -198,6 +200,11 @@ void thermal_imaging_task(void *param)
 
 		    /*Draw the Gestures*/
 		    DrawChevrons();
+
+		    /*Draw the Buttons*/
+		    DrawButtons();
+
+		    /*Increase counter*/
 		    ticks++;
 		}
 	}
@@ -772,6 +779,150 @@ void DrawChevrons(void)
 			}
 		}
 
+	}
+}
+
+void DrawButtons(void)
+{
+	int x=0, y=0;
+	uint32_t position = 0;
+	static _Bool current_csb1 = false;
+	static _Bool current_csb2 = false;
+	static _Bool current_csb3 = false;
+
+	if(cbuttons.csb1_status != current_csb1)
+	{
+		current_csb1 = cbuttons.csb1_status;
+
+		/*Set the button position*/
+		cyhal_uart_putc(&ardu_uart, POSLEFT_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON1_POSLEFT & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON1_POSLEFT >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		cyhal_uart_putc(&ardu_uart, POSTOP_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON1_POSTOP & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON1_POSTOP >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		if(current_csb1)
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, button_csb1[position]);
+			    	position++;
+				}
+			}
+		}
+		else
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, 0x00);
+			    	position++;
+				}
+			}
+		}
+	}
+
+	if(cbuttons.csb2_status != current_csb2)
+	{
+		current_csb2 = cbuttons.csb2_status;
+
+		/*Set the button position*/
+		cyhal_uart_putc(&ardu_uart, POSLEFT_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON2_POSLEFT & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON2_POSLEFT >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		cyhal_uart_putc(&ardu_uart, POSTOP_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON2_POSTOP & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON2_POSTOP >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		if(current_csb2)
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, button_csb2[position]);
+			    	position++;
+				}
+			}
+		}
+		else
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, 0x00);
+			    	position++;
+				}
+			}
+		}
+	}
+
+	if(cbuttons.csb3_status != current_csb3)
+	{
+		current_csb3 = cbuttons.csb3_status;
+
+		/*Set the button position*/
+		cyhal_uart_putc(&ardu_uart, POSLEFT_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON3_POSLEFT & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON3_POSLEFT >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		cyhal_uart_putc(&ardu_uart, POSTOP_CMD);
+		cyhal_uart_putc(&ardu_uart, BUTTON3_POSTOP & 0xFF);
+		cyhal_uart_putc(&ardu_uart, (BUTTON3_POSTOP >> 8) & 0xFF);
+		cyhal_uart_putc(&ardu_uart, DUMMY_CMD);
+		if(current_csb3)
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, button_csb3[position]);
+			    	position++;
+				}
+			}
+		}
+		else
+		{
+			position = 0;
+			for(y = 0; y < 2; y++)
+			{
+				for(x = 0; x < 5; x++)
+				{
+			    	cyhal_uart_putc(&ardu_uart, x);
+			    	cyhal_uart_putc(&ardu_uart, y);
+			    	cyhal_uart_putc(&ardu_uart, 0x20);
+			    	cyhal_uart_putc(&ardu_uart, 0x00);
+			    	position++;
+				}
+			}
+		}
 	}
 }
 

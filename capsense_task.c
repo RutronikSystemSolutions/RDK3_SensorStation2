@@ -150,9 +150,6 @@ static void process_touch(void)
     uint32_t button0_status;
     uint32_t button1_status;
     uint32_t button2_status;
-    static _Bool csb1_status = false;
-    static _Bool csb2_status = false;
-    static _Bool csb3_status = false;
 
     /* Get button 0 status */
     button0_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID,CY_CAPSENSE_BUTTON0_SNS0_ID,&cy_capsense_context);
@@ -167,54 +164,36 @@ static void process_touch(void)
 	if(button0_status)
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_ON);
-		if(!csb1_status)
-		{
-			cbuttons.csb1_status = true;
-		}
+		cbuttons.csb1_status = true;
 	}
 	else
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_OFF);
-		if(csb1_status)
-		{
-			cbuttons.csb1_status = false;
-		}
+		cbuttons.csb1_status = false;
 	}
 
     /* Detect new touch on Button1 */
     if (button1_status)
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_ON);
-		if(!csb2_status)
-		{
-			cbuttons.csb2_status = true;
-		}
+		cbuttons.csb2_status = true;
 	}
 	else
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_OFF);
-		if(csb2_status)
-		{
-			cbuttons.csb2_status = false;
-		}
+		cbuttons.csb2_status = false;
 	}
 
     /* Detect new touch on Button2 */
     if (button2_status)
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_ON);
-		if(!csb3_status)
-		{
-			cbuttons.csb3_status = true;
-		}
+		cbuttons.csb3_status = true;
 	}
 	else
 	{
 		cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_OFF);
-		if(csb3_status)
-		{
-			cbuttons.csb3_status = false;
-		}
+		cbuttons.csb3_status = false;
 	}
 
 }

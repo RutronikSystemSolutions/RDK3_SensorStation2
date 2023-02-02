@@ -17,5 +17,8 @@ extern uint8_t chev_up[];
 extern uint8_t chev_down[];
 extern uint8_t chev_left[];
 extern uint8_t chev_right[];
+extern uint8_t button_csb1[];
+extern uint8_t button_csb2[];
+extern uint8_t button_csb3[];
 
 #endif /* IMAGE_LUT_H_ */
