@@ -124,7 +124,7 @@ void thermal_imaging_task(void *param)
 	/*POR Delay*/
 	vTaskDelay(pdMS_TO_TICKS(STARTUP_DELAY_MS));
 
-	/**/
+	/*Setup the environment*/
 	DrawStaticDisplay();
 
 	for(;;)
