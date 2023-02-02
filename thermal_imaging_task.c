@@ -187,8 +187,6 @@ void thermal_imaging_task(void *param)
 			    		thermal_image[x] = iron_map[iron_map_index];
 			    	}
 
-			    	cyhal_gpio_toggle(LED1);
-
 			    	/*Draw a Thermal Image*/
 			    	DrawThermalImage();
 

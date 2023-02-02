@@ -278,8 +278,6 @@ void gesture_control_task(void *param)
             		}
 
         		}
-
-        		cyhal_gpio_toggle(LED2);
     		}
     	}
 	}
