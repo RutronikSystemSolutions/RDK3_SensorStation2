@@ -10,6 +10,7 @@
 
 #define CAPSENSE_INTR_PRIORITY      (7u)
 #define EZI2C_INTR_PRIORITY         (6u)
+#define BUTTON_DELAY_TIMES          (2u)
 
 static uint32_t initialize_capsense(void);
 static void capsense_isr(void);
@@ -147,53 +148,110 @@ void capsense_callback(cy_stc_active_scan_sns_t * ptrActiveScan)
 *******************************************************************************/
 static void process_touch(void)
 {
-    uint32_t button0_status;
     uint32_t button1_status;
     uint32_t button2_status;
+    uint32_t button3_status;
+
+    static uint32_t cnt_1 = 0;
+    static _Bool rel_1 = true;
+    static uint32_t cnt_2 = 0;
+    static _Bool rel_2 = true;
+    static uint32_t cnt_3 = 0;
+    static _Bool rel_3 = true;
 
     /* Get button 0 status */
-    button0_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID,CY_CAPSENSE_BUTTON0_SNS0_ID,&cy_capsense_context);
+    button1_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON0_WDGT_ID,CY_CAPSENSE_BUTTON0_SNS0_ID,&cy_capsense_context);
 
     /* Get button 1 status */
-    button1_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON1_WDGT_ID,CY_CAPSENSE_BUTTON1_SNS0_ID,&cy_capsense_context);
+    button2_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON1_WDGT_ID,CY_CAPSENSE_BUTTON1_SNS0_ID,&cy_capsense_context);
 
     /* Get button 2 status */
-    button2_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON2_WDGT_ID,CY_CAPSENSE_BUTTON2_SNS0_ID,&cy_capsense_context);
-
-    /* Detect new touch on Button0 */
-	if(button0_status)
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_ON);
-		cbuttons.csb1_status = true;
-	}
-	else
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_OFF);
-		cbuttons.csb1_status = false;
-	}
+    button3_status = Cy_CapSense_IsSensorActive(CY_CAPSENSE_BUTTON2_WDGT_ID,CY_CAPSENSE_BUTTON2_SNS0_ID,&cy_capsense_context);
 
     /* Detect new touch on Button1 */
-    if (button1_status)
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_ON);
-		cbuttons.csb2_status = true;
-	}
-	else
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_OFF);
-		cbuttons.csb2_status = false;
-	}
+    if(button1_status)
+    {
+    	if(cnt_1 == BUTTON_DELAY_TIMES)
+    	{
+    		cnt_1 = 0;
+    		if(rel_1 == true)
+    		{
+    			cbuttons.csb1_status = !cbuttons.csb1_status;
+    			rel_1 = false;
+
+    			if(cbuttons.csb1_status)
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_ON);
+    			}
+    			else
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED1, CYBSP_LED_STATE_OFF);
+    			}
+    		}
+    	}
+    	cnt_1++;
+    }
+    else
+    {
+    	rel_1 = true;
+    	cnt_1 = 0;
+    }
 
     /* Detect new touch on Button2 */
-    if (button2_status)
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_ON);
-		cbuttons.csb3_status = true;
-	}
-	else
-	{
-		cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_OFF);
-		cbuttons.csb3_status = false;
-	}
+    if(button2_status)
+    {
+    	if(cnt_2 == BUTTON_DELAY_TIMES)
+    	{
+    		cnt_2 = 0;
+    		if(rel_2 == true)
+    		{
+    			cbuttons.csb2_status = !cbuttons.csb2_status;
+    			rel_2 = false;
 
+    			if(cbuttons.csb2_status)
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_ON);
+    			}
+    			else
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED2, CYBSP_LED_STATE_OFF);
+    			}
+    		}
+    	}
+    	cnt_2++;
+    }
+    else
+    {
+    	rel_2 = true;
+    	cnt_2 = 0;
+    }
+
+    /* Detect new touch on Button3 */
+    if(button3_status)
+    {
+    	if(cnt_3 == BUTTON_DELAY_TIMES)
+    	{
+    		cnt_3 = 0;
+    		if(rel_3 == true)
+    		{
+    			cbuttons.csb3_status = !cbuttons.csb3_status;
+    			rel_3 = false;
+
+    			if(cbuttons.csb3_status)
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_ON);
+    			}
+    			else
+    			{
+    				cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_OFF);
+    			}
+    		}
+    	}
+    	cnt_3++;
+    }
+    else
+    {
+    	rel_3 = true;
+    	cnt_3 = 0;
+    }
 }
