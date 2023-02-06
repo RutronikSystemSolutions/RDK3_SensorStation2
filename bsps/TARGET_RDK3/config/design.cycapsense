@@ -5,10 +5,10 @@
         <Property id="DEVICE_TYPE" value="P6_CSDV2"/>
     </DesignProperties>
     <GeneralProperties>
-        <Property id="REGULAR_RC_IIR_FILTER_EN" value="false"/>
+        <Property id="REGULAR_RC_IIR_FILTER_EN" value="true"/>
         <Property id="REGULAR_IIR_RC_N" value="128"/>
-        <Property id="REGULAR_RC_MEDIAN_FILTER_EN" value="false"/>
-        <Property id="REGULAR_RC_AVERAGE_FILTER_EN" value="false"/>
+        <Property id="REGULAR_RC_MEDIAN_FILTER_EN" value="true"/>
+        <Property id="REGULAR_RC_AVERAGE_FILTER_EN" value="true"/>
         <Property id="REGULAR_RC_AVERAGE_SAMPLE_SIZE" value="SAMPLE_4"/>
         <Property id="PROX_RC_IIR_FILTER_EN" value="false"/>
         <Property id="PROX_IIR_RC_N" value="128"/>
@@ -19,15 +19,15 @@
         <Property id="REGULAR_IIR_BL_TYPE" value="PERFORMANCE"/>
         <Property id="PROX_IIR_BL_N" value="1"/>
         <Property id="PROX_IIR_BL_TYPE" value="PERFORMANCE"/>
-        <Property id="MULTI_FREQ_SCAN_EN" value="false"/>
-        <Property id="SENSOR_AUTO_RESET_EN" value="false"/>
+        <Property id="MULTI_FREQ_SCAN_EN" value="true"/>
+        <Property id="SENSOR_AUTO_RESET_EN" value="true"/>
         <Property id="SLIDER_MULTIPLIER" value="SNS_NUM_MINUS_1"/>
         <Property id="TOUCHPAD_MULTIPLIER" value="SNS_NUM_MINUS_1"/>
         <Property id="BLOCK_ANALOG_WAKEUP_DELAY_US" value="25"/>
         <Property id="VREF_SOURCE" value="SRSS"/>
         <Property id="IREF_SOURCE" value="SRSS"/>
         <Property id="PROX_TOUCH_COEFF" value="300"/>
-        <Property id="BIST_EN" value="false"/>
+        <Property id="BIST_EN" value="true"/>
         <Property id="BIST_WDGT_CRC_EN" value="true"/>
         <Property id="BIST_BSLN_DUPLICATION_EN" value="true"/>
         <Property id="BIST_BSLN_RAW_OUT_RANGE_EN" value="true"/>

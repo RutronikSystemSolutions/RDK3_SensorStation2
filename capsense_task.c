@@ -10,7 +10,7 @@
 
 #define CAPSENSE_INTR_PRIORITY      (7u)
 #define EZI2C_INTR_PRIORITY         (6u)
-#define BUTTON_DELAY_TIMES          (2u)
+#define BUTTON_DELAY_TIMES          (3u)
 
 static uint32_t initialize_capsense(void);
 static void capsense_isr(void);
