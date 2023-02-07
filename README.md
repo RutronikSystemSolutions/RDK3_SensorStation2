@@ -2,6 +2,8 @@
 
 This is a demonstration of the sensors MLX90640 [thermal camera], VCNL4035X01 [gesture control], and the smart display GEN4-ULCD-35P4CT-CLB. Everything is connected to the main controller - **RDK3** board.
 
+<img src="images/SS2_RDK3.jpg" style="zoom:20%;" />
+
 ## Requirements
 
 - [ModusToolbox&trade; software](https://www.infineon.com/modustoolbox) v3.0 or later (tested with v3.0)
